@@ -13,11 +13,12 @@ class CategoryTableViewController: UITableViewController {
     
     let realm = try! Realm()
     
-    let categories = [Category]()
+    var categories : Results<Category>?
 
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        loadCategories()
         
     }
 
@@ -27,22 +28,29 @@ class CategoryTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return categories.count
+        return categories?.count ?? 1
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath)
 
-        let categoryYouWork = categories[indexPath.row]
+        if let categoryYouWork = categories?[indexPath.row]{
         
-        cell.textLabel?.text = categoryYouWork.name
-
+            cell.textLabel?.text = categoryYouWork.name
+        }
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToItem", sender: self)
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        let destinationVC = segue.destination as! ToDoListTableViewController
+        if let indexPath = tableView.indexPathForSelectedRow{
+            destinationVC.selectedCategory = categories?[indexPath.row]
+        }
     }
     
 
@@ -79,6 +87,11 @@ class CategoryTableViewController: UITableViewController {
                 print("Error...\(error)")
         }
         
+        tableView.reloadData()
+    }
+    
+    func loadCategories(){
+        categories = realm.objects(Category.self)
         tableView.reloadData()
     }
    
