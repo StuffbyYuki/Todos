@@ -49,14 +49,16 @@ class CategoryTableViewController: UITableViewController {
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
         var textField = UITextField()
         
-        let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
+        let alert = UIAlertController(title: "Create New Category", message: "", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (cancel) in
             //Happinning nothing
+            print("Adding Canceled...")
         }
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
         
             let newCategory = Category()
             newCategory.name = textField.text!
+            self.save(category: newCategory)
         }
         
         alert.addAction(action)
@@ -69,6 +71,16 @@ class CategoryTableViewController: UITableViewController {
         present(alert, animated: true, completion: nil)
     }
     
+    func save(category: Category){
+        do {
+        try realm.write {
+            realm.add(category)
+            }}catch{
+                print("Error...\(error)")
+        }
+        
+        tableView.reloadData()
+    }
    
 
     
