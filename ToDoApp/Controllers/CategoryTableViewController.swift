@@ -12,6 +12,8 @@ import RealmSwift
 class CategoryTableViewController: UITableViewController {
     
     let realm = try! Realm()
+    
+    let categories = [Category]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,36 +27,44 @@ class CategoryTableViewController: UITableViewController {
 
     override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete implementation, return the number of rows
-        return 1
+        return categories.count
     }
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "Cell", for: indexPath)
+        let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath)
 
-        cell.textLabel?.text = "Shopping List"
+        let categoryYouWork = categories[indexPath.row]
+        
+        cell.textLabel?.text = categoryYouWork.name
 
         return cell
     }
     
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        performSegue(withIdentifier: "goToChat", sender: self)
+        performSegue(withIdentifier: "goToItem", sender: self)
     }
     
 
     @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
+        var textField = UITextField()
         
         let alert = UIAlertController(title: "Add New Category", message: "", preferredStyle: .alert)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (cancel) in
+            //Happinning nothing
+        }
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
-            
-            let textField = UITextField()
-            
+        
             let newCategory = Category()
             newCategory.name = textField.text!
-            
         }
         
         alert.addAction(action)
+        alert.addAction(cancel)
+        alert.addTextField { (field) in
+            textField = field
+            field.placeholder = "Create New Category"
+        }
         
         present(alert, animated: true, completion: nil)
     }
