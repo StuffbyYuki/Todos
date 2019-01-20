@@ -8,8 +8,9 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
-class CategoryTableViewController: UITableViewController {
+class CategoryTableViewController: SwipeTableViewController {
     
     let realm = try! Realm()
     
@@ -18,6 +19,7 @@ class CategoryTableViewController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        navigationController?.navigationBar.barTintColor = UIColor.flatWhite
         loadCategories()
         
     }
@@ -33,11 +35,12 @@ class CategoryTableViewController: UITableViewController {
 
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "categoryCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
 
         if let categoryYouWork = categories?[indexPath.row]{
         
             cell.textLabel?.text = categoryYouWork.name
+    
         }
         return cell
     }
@@ -93,6 +96,20 @@ class CategoryTableViewController: UITableViewController {
     func loadCategories(){
         categories = realm.objects(Category.self)
         tableView.reloadData()
+    }
+    
+    override func updateModel(at indexpath: IndexPath){
+        if let categoryToDelete = self.categories?[indexpath.row] {
+            do {
+                try self.realm.write {
+                    self.realm.delete(categoryToDelete)
+                }
+            }catch{
+                print("Error..when updating model.\(error)")
+            }
+            }
+        
+        
     }
    
 

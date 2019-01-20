@@ -8,8 +8,9 @@
 
 import UIKit
 import RealmSwift
+import ChameleonFramework
 
-class ToDoListTableViewController: UITableViewController {
+class ToDoListTableViewController: SwipeTableViewController {
 
     let realm = try! Realm()
     
@@ -39,13 +40,14 @@ class ToDoListTableViewController: UITableViewController {
     
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
-        let cell = tableView.dequeueReusableCell(withIdentifier: "itemCell", for: indexPath)
+        let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if let item = listItems?[indexPath.row]{
             cell.textLabel?.text = item.subName
             
             // value = condition ? valueIfTrue : valueIfFalse
             cell.accessoryType = item.done ? .checkmark : .none
+            
         }
         return cell
     }
@@ -114,8 +116,21 @@ class ToDoListTableViewController: UITableViewController {
 //    }
     
     func loadItems(){
-        listItems = selectedCategory?.items.sorted(byKeyPath: "subName", ascending: true)
+        
+        listItems = selectedCategory?.items.sorted(byKeyPath: "date", ascending: true)
         tableView.reloadData()
+    }
+    
+    override func updateModel(at indexpath: IndexPath) {
+        if let item = listItems?[indexpath.row] {
+            do {
+                try realm.write {
+                    realm.delete(item)
+                }
+            }catch{
+                print("Error!...\(error)")
+            }
+        }
     }
     
     
