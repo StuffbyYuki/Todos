@@ -25,7 +25,8 @@ class ToDoListTableViewController: SwipeTableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        
+      navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
         
     }
 
@@ -43,10 +44,16 @@ class ToDoListTableViewController: SwipeTableViewController {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
         if let item = listItems?[indexPath.row]{
-            cell.textLabel?.text = item.subName
             
-            // value = condition ? valueIfTrue : valueIfFalse
-            cell.accessoryType = item.done ? .checkmark : .none
+            cell.textLabel?.text = item.subName
+            cell.selectionStyle = .none
+            
+            if item.done == true {
+                cell.accessoryType = .none
+            } else {
+                cell.accessoryType = .checkmark
+                cell.tintColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+            }
             
         }
         return cell
@@ -61,7 +68,11 @@ class ToDoListTableViewController: SwipeTableViewController {
                 }}catch{
                     print("Error!...\(error)")
             }
+            
+            
+            
         }
+        
         tableView.reloadData()
         tableView.deselectRow(at: indexPath, animated: true)
         
@@ -75,7 +86,7 @@ class ToDoListTableViewController: SwipeTableViewController {
         
         let alert = UIAlertController(title: "Create New Item", message: "", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (cancel) in
-            //Happinning nothing
+            
             print("Adding Canceled...")
         }
         let action = UIAlertAction(title: "Add", style: .default) { (action) in
@@ -104,16 +115,6 @@ class ToDoListTableViewController: SwipeTableViewController {
         present(alert, animated: true, completion: nil)
     }
     
-//    func save(item: Item){
-//        do {
-//            try realm.write {
-//                realm.add(item)
-//            }}catch{
-//                print("Error...\(error)")
-//        }
-//
-//        tableView.reloadData()
-//    }
     
     func loadItems(){
         
@@ -132,7 +133,6 @@ class ToDoListTableViewController: SwipeTableViewController {
             }
         }
     }
-    
     
    
 }

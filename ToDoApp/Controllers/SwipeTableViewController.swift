@@ -17,6 +17,7 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
         super.viewDidLoad()
 
         tableView.rowHeight = 70
+        
     }
 
     // MARK: - Table view data source

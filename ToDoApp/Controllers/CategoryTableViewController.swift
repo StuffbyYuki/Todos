@@ -16,11 +16,14 @@ class CategoryTableViewController: SwipeTableViewController {
     
     var categories : Results<Category>?
 
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        navigationController?.navigationBar.barTintColor = UIColor.flatWhite
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+        
         loadCategories()
+        
         
     }
 
@@ -37,9 +40,11 @@ class CategoryTableViewController: SwipeTableViewController {
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
 
-        if let categoryYouWork = categories?[indexPath.row]{
+        if let categoryCell = categories?[indexPath.row]{
         
-            cell.textLabel?.text = categoryYouWork.name
+            cell.textLabel?.text = categoryCell.name
+            cell.accessoryType = .detailDisclosureButton
+            
     
         }
         return cell
