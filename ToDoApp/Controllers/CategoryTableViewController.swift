@@ -8,7 +8,6 @@
 
 import UIKit
 import RealmSwift
-import ChameleonFramework
 
 class CategoryTableViewController: SwipeTableViewController {
     
@@ -43,7 +42,7 @@ class CategoryTableViewController: SwipeTableViewController {
         if let categoryCell = categories?[indexPath.row]{
         
             cell.textLabel?.text = categoryCell.name
-            cell.accessoryType = .detailDisclosureButton
+            
             
     
         }

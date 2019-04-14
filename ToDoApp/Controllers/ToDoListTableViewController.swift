@@ -8,7 +8,6 @@
 
 import UIKit
 import RealmSwift
-import ChameleonFramework
 
 class ToDoListTableViewController: SwipeTableViewController {
 
@@ -48,7 +47,7 @@ class ToDoListTableViewController: SwipeTableViewController {
             cell.textLabel?.text = item.subName
             cell.selectionStyle = .none
             
-            if item.done == true {
+            if item.done == false {
                 cell.accessoryType = .none
             } else {
                 cell.accessoryType = .checkmark
