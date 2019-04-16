@@ -16,8 +16,9 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
     override func viewDidLoad() {
         super.viewDidLoad()
 
-        tableView.rowHeight = 70
-        
+        tableView.rowHeight = 72
+        tableView.separatorColor = #colorLiteral(red: 0.6174908876, green: 0.8708055615, blue: 1, alpha: 1)
+        navigationController?.navigationBar.barTintColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
     }
 
     // MARK: - Table view data source
@@ -58,6 +59,4 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
     }
 
    
-   
-
 }
