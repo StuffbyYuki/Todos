@@ -28,7 +28,8 @@ class ToDoListTableViewController: SwipeTableViewController {
         super.viewDidLoad()
         
         //tableView.setEditing(true, animated: false)
-    
+        //tableView.allowsMultipleSelectionDuringEditing = true
+     
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -45,24 +46,46 @@ class ToDoListTableViewController: SwipeTableViewController {
         // #warning Incomplete implementation, return the number of rows
         return listItems?.count ?? 1
     }
-
     
+//    func tableView(tableView: UITableView, editingStyleForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell.EditingStyle {
+//        return tableView.isEditing ? UITableViewCell.EditingStyle.none : UITableViewCell.EditingStyle.delete
+//    }
+//
     override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         
         let cell = super.tableView(tableView, cellForRowAt: indexPath)
         
+
+        let checkImageView1 = UIImageView(image: UIImage(named: "checked"))
+        let checkImageView2 = UIImageView(image: UIImage(named: "unchecked"))
+        
+        checkImageView1.setImageColor(color: #colorLiteral(red: 0.09606388956, green: 0.7421667576, blue: 0.944612205, alpha: 1))
+        checkImageView2.setImageColor(color: #colorLiteral(red: 0.09606388956, green: 0.7421667576, blue: 0.944612205, alpha: 1))
+        
+//        let attributeString: NSMutableAttributedString =  NSMutableAttributedString(string: cell.textLabel?.text ?? "No item")
+//        attributeString.addAttribute(NSAttributedString.Key.strikethroughStyle, value: 2, range: NSMakeRange(0, attributeString.length))
+        
         if let item = listItems?[indexPath.row]{
             
+            cell.textLabel?.textColor = #colorLiteral(red: 0.2, green: 0.1921568627, blue: 0.231372549, alpha: 1)
             cell.textLabel?.text = item.subName
             cell.selectionStyle = .none
             
+            
             if item.done == false {
                 addSelectionFeedbackGenerator()
-                cell.accessoryType = .none
+                cell.accessoryView = checkImageView2
+                //cell.accessoryType = .none
+            
+                
             } else {
-                addSelectionFeedbackGenerator()
-                cell.accessoryType = .checkmark
-                cell.tintColor = #colorLiteral(red: 0, green: 0.5898008943, blue: 1, alpha: 1)
+                addFeedBackGenerator()
+                cell.accessoryView = checkImageView1
+               //cell.accessoryType = .checkmark
+                
+                
+                //cell.textLabel?.attributedText = attributeString
+                //cell.textLabel?.textColor = #colorLiteral(red: 0.6000000238, green: 0.6000000238, blue: 0.6000000238, alpha: 1)
             }
             
         }
@@ -86,45 +109,18 @@ class ToDoListTableViewController: SwipeTableViewController {
         
     }
     
+  
+      //------------------------------------------------
+    
+    
 //    override func tableView(_ tableView: UITableView, shouldIndentWhileEditingRowAt indexPath: IndexPath) -> Bool {
 //        return false
 //    }
-    
+//
 //    override func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
 //        return UITableViewCell.EditingStyle.none
 //    }
 
-    //------------------------------------------------
-    
-    
-//    override func tableView(_ tableView: UITableView, moveRowAt sourceIndexPath: IndexPath, to destinationIndexPath: IndexPath) {
-//
-//
-//        try! realm.write {
-//            let sourceObject = listItems?[sourceIndexPath.row]
-//            let destinationObject = listItems?[destinationIndexPath.row]
-//
-//            let destinationObjectOrder = destinationObject?.order
-//
-//            if sourceIndexPath.row < destinationIndexPath.row {
-//                // 上から下に移動した場合、間の項目を上にシフト
-//                for index in sourceIndexPath.row...destinationIndexPath.row {
-//                    let object = listItems?[index]
-//                    object?.order -= 1
-//                }
-//            } else {
-//                // 下から上に移動した場合、間の項目を下にシフト
-//                for index in (destinationIndexPath.row..<sourceIndexPath.row).reversed() {
-//                    let object = listItems?[index]
-//                    object?.order += 1
-//                }
-//            }
-//            // 移動したセルの並びを移動先に更新
-//            sourceObject?.order = destinationObjectOrder!
-//        }
-//
-//    }
-    
     
     //--------------------------------------------------------
     
@@ -204,6 +200,7 @@ class ToDoListTableViewController: SwipeTableViewController {
         alert.addTextField { (field) in
             textField = field
             field.placeholder = "Create New Item"
+            field.autocorrectionType = .yes
         }
         
         present(alert, animated: true, completion: nil)
@@ -224,38 +221,8 @@ class ToDoListTableViewController: SwipeTableViewController {
     
     
     
-    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        var textField = UITextField()
-        
-        let alert = UIAlertController(title: "Create New Item", message: "", preferredStyle: .alert)
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (cancel) in
-            
-            print("Adding Canceled...")
-        }
-        let action = UIAlertAction(title: "Add", style: .default) { (action) in
-            
-            if let currentCategory = self.selectedCategory{
-                
-                do {
-                    try self.realm.write {
-                        let newItem = Item()
-                        newItem.subName = textField.text!
-                        currentCategory.items.append(newItem)
-                    }}catch{
-                        print("Error!..\(error)")
-                }
-            }
-            self.tableView.reloadData()
-        }
-        
-        alert.addAction(action)
-        alert.addAction(cancel)
-        alert.addTextField { (field) in
-            textField = field
-            field.placeholder = "Create New Item"
-        }
-        
-        present(alert, animated: true, completion: nil)
+    @IBAction func settingsPressed(_ sender: UIBarButtonItem) {
+       
     }
     
     
@@ -278,4 +245,12 @@ class ToDoListTableViewController: SwipeTableViewController {
     }
     
    
+}
+
+extension UIImageView {
+    func setImageColor(color: UIColor) {
+        let templateImage = self.image?.withRenderingMode(.alwaysTemplate)
+        self.image = templateImage
+        self.tintColor = color
+    }
 }

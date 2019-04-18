@@ -28,7 +28,8 @@ class SwipeTableViewController: UITableViewController, SwipeTableViewCellDelegat
         cell.delegate = self
         return cell
     }
-    
+  
+  
    
     
     

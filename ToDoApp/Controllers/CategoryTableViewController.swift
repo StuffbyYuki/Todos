@@ -17,10 +17,14 @@ class CategoryTableViewController: SwipeTableViewController {
 
     private var roundButton = UIButton()
     
+    let textField = UITextField()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navTouchDetect()
         loadCategories()
+        
         
     }
 
@@ -48,7 +52,7 @@ class CategoryTableViewController: SwipeTableViewController {
         if let categoryCell = categories?[indexPath.row]{
         
             cell.textLabel?.text = categoryCell.name
-            
+            cell.textLabel?.textColor = #colorLiteral(red: 0.2, green: 0.1921568627, blue: 0.231372549, alpha: 1)
             
     
         }
@@ -58,15 +62,31 @@ class CategoryTableViewController: SwipeTableViewController {
     override func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         performSegue(withIdentifier: "goToItem", sender: self)
         tableView.deselectRow(at: indexPath, animated: true)
-        
+      
     }
     
     
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        let destinationVC = segue.destination as! ToDoListTableViewController
-        if let indexPath = tableView.indexPathForSelectedRow{
-            destinationVC.selectedCategory = categories?[indexPath.row]
+        
+        if segue.identifier == "goToItem" {
+            let destinationVC = segue.destination as! ToDoListTableViewController
+            if let indexPath = tableView.indexPathForSelectedRow{
+                destinationVC.selectedCategory = categories?[indexPath.row]
+            } else if segue.identifier == "toSettings" {
+                _ = segue.destination as! SettingsTableViewController
+            }
         }
+    }
+    
+    func navTouchDetect(){
+        let tap = UITapGestureRecognizer(target: self, action: #selector(didTapNavBar))
+        self.navigationController?.navigationBar.addGestureRecognizer(tap)
+    }
+   
+    
+    @objc func didTapNavBar() {
+        print("user did tap navigation bar")
+        
     }
     
   
@@ -102,7 +122,6 @@ class CategoryTableViewController: SwipeTableViewController {
             self.roundButton.layer.shadowOpacity = 0.5
             
             // Add a pulsing animation to draw attention to button:
-            
             //            let scaleAnimation: CABasicAnimation = CABasicAnimation(keyPath: "transform.scale")
             //                scaleAnimation.duration = 0.5
             //                scaleAnimation.repeatCount = .greatestFiniteMagnitude
@@ -121,6 +140,7 @@ class CategoryTableViewController: SwipeTableViewController {
         addFeedBackGenerator()
         
         var textField = UITextField()
+       
         
         let alert = UIAlertController(title: "Create New Category", message: "", preferredStyle: .alert)
         let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (cancel) in
@@ -139,6 +159,8 @@ class CategoryTableViewController: SwipeTableViewController {
         alert.addTextField { (field) in
             textField = field
             field.placeholder = "Create New Category"
+            field.autocorrectionType = .yes
+            
         }
         
         present(alert, animated: true, completion: nil)
@@ -152,33 +174,16 @@ class CategoryTableViewController: SwipeTableViewController {
         generator.impactOccurred()
     }
     
+ 
     
  
 
-    @IBAction func addButtonPressed(_ sender: UIBarButtonItem) {
-        var textField = UITextField()
+    @IBAction func settingsButtonPressed(_ sender: UIBarButtonItem) {
         
-        let alert = UIAlertController(title: "Create New Category", message: "", preferredStyle: .alert)
-        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (cancel) in
-            //Happinning nothing
-            print("Adding Canceled...")
-        }
-        let action = UIAlertAction(title: "Add", style: .default) { (action) in
-        
-            let newCategory = Category()
-            newCategory.name = textField.text!
-            self.save(category: newCategory)
-        }
-        
-        alert.addAction(action)
-        alert.addAction(cancel)
-        alert.addTextField { (field) in
-            textField = field
-            field.placeholder = "Create New Category"
-        }
-        
-        present(alert, animated: true, completion: nil)
+        performSegue(withIdentifier: "toSettings", sender: self)
     }
+    
+    
     
     func save(category: Category){
         do {
@@ -205,12 +210,8 @@ class CategoryTableViewController: SwipeTableViewController {
             }catch{
                 print("Error..when updating model.\(error)")
             }
-            }
-        
-        
-    }
-   
-
+        }
     
+    }
 
 }

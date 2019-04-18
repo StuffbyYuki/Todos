@@ -17,6 +17,7 @@
 		8A5A754D21F025CF003C5D45 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A5A754C21F025CF003C5D45 /* Item.swift */; };
 		8A77E0C021F462DC006673C3 /* SwipeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8A77E0BF21F462DC006673C3 /* SwipeTableViewController.swift */; };
 		BEA20BCC24076A5E927998E7 /* Pods_ToDoApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 122127BD28519CFFDF5BAC43 /* Pods_ToDoApp.framework */; };
+		EAC529162267DA9100023378 /* SettingsTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = EAC529152267DA9100023378 /* SettingsTableViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		8A5A754C21F025CF003C5D45 /* Item.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		8A77E0BF21F462DC006673C3 /* SwipeTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeTableViewController.swift; sourceTree = "<group>"; };
 		AD9795A21280AB7D532ACC16 /* Pods-ToDoApp.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-ToDoApp.debug.xcconfig"; path = "Pods/Target Support Files/Pods-ToDoApp/Pods-ToDoApp.debug.xcconfig"; sourceTree = "<group>"; };
+		EAC529152267DA9100023378 /* SettingsTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsTableViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -101,6 +103,7 @@
 				8A5A754621F0253F003C5D45 /* CategoryTableViewController.swift */,
 				8A5A754821F02554003C5D45 /* ToDoListTableViewController.swift */,
 				8A77E0BF21F462DC006673C3 /* SwipeTableViewController.swift */,
+				EAC529152267DA9100023378 /* SettingsTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -263,6 +266,7 @@
 				8A5A754921F02554003C5D45 /* ToDoListTableViewController.swift in Sources */,
 				8A77E0C021F462DC006673C3 /* SwipeTableViewController.swift in Sources */,
 				8A5A754B21F025C3003C5D45 /* Category.swift in Sources */,
+				EAC529162267DA9100023378 /* SettingsTableViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

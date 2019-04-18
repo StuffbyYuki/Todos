@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14490.49"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -33,10 +34,11 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Categories" id="CBD-9c-WOj">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="8LW-5K-qnx">
+                        <barButtonItem key="rightBarButtonItem" image="More" id="8LW-5K-qnx">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="addButtonPressed:" destination="uwX-fZ-Czu" id="Jh9-rB-4gY"/>
+                                <action selector="settingsButtonPressed:" destination="uwX-fZ-Czu" id="Jh9-rB-4gY"/>
+                                <segue destination="Dpi-XR-M2r" kind="presentation" identifier="toSettings" id="JFl-pb-k7C"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -72,10 +74,10 @@
                         </connections>
                     </tableView>
                     <navigationItem key="navigationItem" title="Items" id="Kga-aO-La3">
-                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="uxo-Hi-lzZ">
+                        <barButtonItem key="rightBarButtonItem" title="Settings" image="More" id="uxo-Hi-lzZ">
                             <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             <connections>
-                                <action selector="addButtonPressed:" destination="m1J-NQ-URS" id="8Lx-qQ-YOX"/>
+                                <action selector="settingsPressed:" destination="m1J-NQ-URS" id="8Lx-qQ-YOX"/>
                             </connections>
                         </barButtonItem>
                     </navigationItem>
@@ -83,6 +85,43 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="am4-Rz-L47" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="4594" y="126"/>
+        </scene>
+        <!--SettingsTableView-->
+        <scene sceneID="kKa-wp-2KN">
+            <objects>
+                <viewController id="Dpi-XR-M2r" userLabel="SettingsTableView" customClass="SettingsTableViewController" customModule="ToDoApp" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="kyu-Lx-YwI">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="UNp-z6-7ay">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                <prototypes>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="settingsCell" id="dG4-MZ-COz">
+                                        <rect key="frame" x="0.0" y="28" width="375" height="44"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="dG4-MZ-COz" id="A9s-qR-vHw">
+                                            <rect key="frame" x="0.0" y="0.0" width="375" height="43.5"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                        </tableViewCellContentView>
+                                    </tableViewCell>
+                                </prototypes>
+                            </tableView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="UNp-z6-7ay" firstAttribute="leading" secondItem="nTf-2G-Ias" secondAttribute="leading" id="WAR-OL-v93"/>
+                            <constraint firstItem="UNp-z6-7ay" firstAttribute="bottom" secondItem="nTf-2G-Ias" secondAttribute="bottom" id="bcj-O3-ZCr"/>
+                            <constraint firstItem="UNp-z6-7ay" firstAttribute="top" secondItem="kyu-Lx-YwI" secondAttribute="top" id="mMj-dc-6bl"/>
+                            <constraint firstItem="UNp-z6-7ay" firstAttribute="trailing" secondItem="nTf-2G-Ias" secondAttribute="trailing" id="xIb-Jq-EqI"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="nTf-2G-Ias"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="v4M-ez-QWi" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="5597.6000000000004" y="135.38230884557723"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="JHS-PM-Ewb">
@@ -110,5 +149,8 @@
             <point key="canvasLocation" x="2862" y="125"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="More" width="25" height="25"/>
+    </resources>
     <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
 </document>
